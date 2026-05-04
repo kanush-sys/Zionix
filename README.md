@@ -47,3 +47,4 @@ User clicks "Activate" → STK Push → User enters PIN → Callback confirms �
 
 ## Receiving Money
 All Ksh 500 payments go to the Till/Paybill set as `MPESA_SHORTCODE` in production.
+
