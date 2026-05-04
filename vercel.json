@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api/stkpush",  "dest": "/stkpush.js"  },
-    { "src": "/api/stkquery", "dest": "/stkquery.js"  },
-    { "src": "/api/callback", "dest": "/callback.js"  },
-    { "src": "/api/register", "dest": "/register.js"  },
-    { "src": "/api/login",    "dest": "/login.js"     },
-    { "src": "/api/me",       "dest": "/me.js"        },
-    { "src": "/(.*)",         "dest": "/index.html"   }
+  "rewrites": [
+    { "source": "/api/stkpush",  "destination": "/stkpush.js"  },
+    { "source": "/api/stkquery", "destination": "/stkquery.js"  },
+    { "source": "/api/callback", "destination": "/callback.js"  },
+    { "source": "/api/register", "destination": "/register.js"  },
+    { "source": "/api/login",    "destination": "/login.js"     },
+    { "source": "/api/me",       "destination": "/me.js"        },
+    { "source": "/(.*)",         "destination": "/index.html"   }
   ]
 }
