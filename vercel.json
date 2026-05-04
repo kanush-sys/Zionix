@@ -1,5 +1,13 @@
 {
   "version": 2,
+  "functions": {
+    "stkpush.js": { "runtime": "@vercel/node@3.0.7" },
+    "stkquery.js": { "runtime": "@vercel/node@3.0.7" },
+    "callback.js": { "runtime": "@vercel/node@3.0.7" },
+    "register.js": { "runtime": "@vercel/node@3.0.7" },
+    "login.js":    { "runtime": "@vercel/node@3.0.7" },
+    "me.js":       { "runtime": "@vercel/node@3.0.7" }
+  },
   "rewrites": [
     { "source": "/api/stkpush",  "destination": "/stkpush.js"  },
     { "source": "/api/stkquery", "destination": "/stkquery.js"  },
