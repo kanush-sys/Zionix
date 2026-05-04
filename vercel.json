@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/stkpush",  "dest": "/api/stkpush.js"  },
+    { "src": "/api/stkquery", "dest": "/api/stkquery.js"  },
+    { "src": "/api/callback", "dest": "/api/callback.js"  },
+    { "src": "/api/register", "dest": "/api/register.js"  },
+    { "src": "/api/login",    "dest": "/api/login.js"     },
+    { "src": "/api/me",       "dest": "/api/me.js"        },
+    { "src": "/(.*)",         "dest": "/public/index.html" }
+  ]
+}

@@ -1,0 +1,44 @@
+// api/login.js — Zionix User Login
+// POST /api/login  { email, password }
+const supabase = require('./_supabase');
+const { setCors, handleOptions, ok, err } = require('./_helpers');
+
+module.exports = async (req, res) => {
+  setCors(res);
+  if (handleOptions(req, res)) return;
+  if (req.method !== 'POST') return err(res, 405, 'Use POST.');
+
+  const { email, password } = req.body || {};
+  if (!email || !password) return err(res, 400, 'email and password are required.');
+
+  const { data: sessionData, error: authError } = await supabase.auth.signInWithPassword({ email, password });
+  if (authError) return err(res, 401, 'Incorrect email or password. Please try again.');
+
+  const userId = sessionData.user.id;
+  const authName = sessionData.user.user_metadata?.name || 'Sovereign';
+
+  let { data: profile } = await supabase
+    .from('profiles').select('name, lifetime, lifetime_since, wake_name').eq('id', userId).single();
+
+  if (!profile) {
+    const { data: newProfile } = await supabase.from('profiles').upsert({
+      id: userId, email: sessionData.user.email.toLowerCase().trim(),
+      name: authName, lifetime: false, wake_name: 'NOVA',
+      created_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+    }, { onConflict: 'id' }).select('name, lifetime, lifetime_since, wake_name').single();
+    profile = newProfile || { name: authName, lifetime: false, lifetime_since: null, wake_name: 'NOVA' };
+  }
+
+  return ok(res, {
+    access_token: sessionData.session.access_token,
+    user: {
+      id: userId,
+      email: sessionData.user.email,
+      name: profile.name || authName,
+      premium: profile.lifetime || false,
+      lifetime: profile.lifetime || false,
+      lifetime_since: profile.lifetime_since || null,
+      wake_name: profile.wake_name || 'NOVA',
+    },
+  });
+};
